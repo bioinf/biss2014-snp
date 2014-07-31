@@ -4,16 +4,16 @@ rm(list = ls(all.names = TRUE))
 getwd()
 
 # read data
-SNP_brown_data<-read.table("brown_bear.pooled.snp.txt", header = T, stringsAsFactors = FALSE)
-SNP_polar_data<-read.table("polar_bear.pooled.snp.txt", header = T, stringsAsFactors = FALSE)
+SNP_brown_data<-read.table("../../school/proj/brown_bear.pooled.snp.txt", header = T, stringsAsFactors = FALSE)
+SNP_polar_data<-read.table("../../school/proj/polar_bear.pooled.snp.txt", header = T, stringsAsFactors = FALSE)
 
-
-scaffolds<-unique(SNP_polar_data$chromo) # massive scaff
+# subset SNP for each scaffold in the same position in both(polar-brown) 
+scaffolds<-unique(SNP_polar_data$chromo) # vector of scaffolds names
 list_SNP_brown_merged<-list()
 list_SNP_polar_merged<-list()
 scaffolds_1<-scaffolds[1:3]
-for(l in scaffolds_1){              #for each scaff
-  i<-which(SNP_brown_data$chromo==l)    #
+for(l in scaffolds_1){              
+  i<-which(SNP_brown_data$chromo==l)    
   j<-which(SNP_polar_data$chromo==l)
   a<-SNP_brown_data[i,]$position
   b<-SNP_polar_data[j,]$position
@@ -32,6 +32,8 @@ for(l in scaffolds_1){              #for each scaff
   list_SNP_polar_merged[[l]]<-list_SNP_polar_merged[[l]][d,]
   print(nrow(list_SNP_brown_merged[[l]]))
 }
+
+
 as.numeric(as.factor(list_SNP_brown_merged[[1]]$ABC01))
 list_SNP_brown_merged[[1]]$ABC01
 string<-c("balala")
